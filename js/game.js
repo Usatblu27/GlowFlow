@@ -169,7 +169,6 @@ function loadGameSettings() {
       const numValue = parseInt(value);
       return isNaN(numValue) ? defaults[key] : numValue;
     } catch (error) {
-      console.error(`Error getting setting ${key}:`, error);
       return defaults[key];
     }
   }
@@ -197,10 +196,7 @@ window.updateGameSettings = function () {
   if (settings.musicEnabled === 0) {
     bgMusic.pause();
   } else if (!isPaused && gameActive) {
-    bgMusic.play().catch((e) => console.log("Music play prevented:", e));
   }
-
-  console.log("Game settings updated:", settings);
 };
 function applyGlowEffect(color) {
   return {
@@ -251,7 +247,6 @@ function togglePause() {
     Runner.run(runner, engine);
     pauseOverlay.style.display = "none";
     if (localStorage.getItem("musicSetting") !== "off") {
-      bgMusic.play().catch((e) => console.log("Play prevented:", e));
     }
     pieceIntervalId = setInterval(() => {
       if (canSpawnNewPiece) createPiece();
@@ -272,7 +267,6 @@ function playSound(sound) {
   if (soundEnabled && soundVolume > 0) {
     sound.volume = soundVolume;
     sound.currentTime = 0;
-    sound.play().catch((e) => console.log("Sound play prevented:", e));
   }
 }
 function updateBestScore() {
@@ -890,9 +884,6 @@ function checkColorUnlocks() {
     ) {
       if (unlockedColors !== i + 5) {
         unlockedColors = i + 5;
-        console.log(
-          `Unlocked new color! Total colors: ${unlockedColors}, Threshold: ${colorUnlockThresholds[i]}, Fallen pieces: ${fallenPiecesCount}`
-        );
         initColors();
         updateColorsProgress();
         const centerX = gameWidth / 2;
@@ -948,7 +939,6 @@ displayedBestScore = bestScore;
 document.getElementById("best-score").textContent = `BEST: ${bestScore}`;
 const musicSetting = localStorage.getItem("musicSetting") || "on";
 if (musicSetting === "on") {
-  bgMusic.play().catch((e) => console.log("Autoplay prevented:", e));
 }
 runner = Runner.create();
 Runner.run(runner, engine);

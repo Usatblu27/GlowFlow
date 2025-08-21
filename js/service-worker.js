@@ -25,10 +25,10 @@ const ASSETS_TO_CACHE = [
   "./js/settings.js",
   "./js/statistics.js",
   "./js/offline.js",
-  "./icons/favicon.webp",
-  "./icons/icon-192x192.webp",
-  "./icons/icon-512x512.webp",
-  "./icons/image.webp",
+  "./icons/favicon.png",
+  "./icons/icon-192x192.png",
+  "./icons/icon-512x512.png",
+  "./icons/image.png",
   "./audio/bg-music.opus",
   "./audio/collision.opus",
   "./audio/explosion.opus",
@@ -38,10 +38,7 @@ self.addEventListener("install", (event) => {
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log("Opened cache");
-        return cache.addAll(ASSETS_TO_CACHE).catch((error) => {
-          console.error("Failed to cache some resources:", error);
-        });
+        return cache.addAll(ASSETS_TO_CACHE).catch((error) => {});
       })
       .then(() => self.skipWaiting())
   );
@@ -57,7 +54,6 @@ self.addEventListener("fetch", (event) => {
         return (
           response ||
           fetch(event.request).catch((error) => {
-            console.error("Fetch failed; returning offline page:", error);
             return caches.match(OFFLINE_URL);
           })
         );

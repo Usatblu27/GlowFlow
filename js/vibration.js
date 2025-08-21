@@ -11,14 +11,12 @@ class VibrationManager {
         vibrationValue = value !== null ? parseInt(value) : 50;
         if (isNaN(vibrationValue)) vibrationValue = 50;
       } catch (error) {
-        console.error("Error reading vibration setting:", error);
         vibrationValue = 50;
       }
       if (vibrationValue <= 0) {
         return false;
       }
       if (document.visibilityState !== "visible") {
-        console.debug("Vibration blocked: tab not active");
         return false;
       }
       let vibrationPattern;
@@ -30,15 +28,12 @@ class VibrationManager {
       } else {
         vibrationPattern = Math.max(duration * (vibrationValue / 100), 10);
       }
-      console.log("Attempting vibration:", vibrationPattern);
       const result = navigator.vibrate(vibrationPattern);
       if (!result) {
-        console.debug("Vibration was blocked by browser policy");
         return false;
       }
       return true;
     } catch (error) {
-      console.debug("Vibration error:", error);
       return false;
     }
   }
@@ -72,7 +67,6 @@ class VibrationManager {
 window.ensureVibrationManager = function (callback) {
   try {
     if (!("vibrate" in navigator)) {
-      console.log("Vibration not supported by browser");
       if (callback) callback();
       return;
     }
@@ -85,7 +79,6 @@ window.ensureVibrationManager = function (callback) {
     );
     if (existingScript) {
       const onLoad = function () {
-        console.log("Vibration script already loaded");
         if (callback) setTimeout(callback, 100);
       };
       if (existingScript.complete || existingScript.readyState === "complete") {
@@ -93,7 +86,6 @@ window.ensureVibrationManager = function (callback) {
       } else {
         existingScript.addEventListener("load", onLoad);
         existingScript.addEventListener("error", () => {
-          console.error("Vibration script failed to load");
           if (callback) callback();
         });
       }
@@ -101,20 +93,16 @@ window.ensureVibrationManager = function (callback) {
     }
     const basePath = getBasePath();
     const scriptPath = `${basePath}/js/vibration.js`;
-    console.log("Loading vibration script:", scriptPath);
     const script = document.createElement("script");
     script.src = scriptPath;
     script.onload = function () {
-      console.log("Vibration script loaded successfully");
       if (callback) setTimeout(callback, 100);
     };
     script.onerror = function (error) {
-      console.error("Failed to load vibration script:", error);
       if (callback) callback();
     };
     document.head.appendChild(script);
   } catch (error) {
-    console.error("Error in ensureVibrationManager:", error);
     if (callback) callback();
   }
 };

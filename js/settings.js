@@ -18,7 +18,6 @@ function getSetting(key) {
     const numValue = parseInt(value);
     return isNaN(numValue) ? defaults[key] : numValue;
   } catch (error) {
-    console.error(`Error getting setting ${key}:`, error);
     return defaults[key];
   }
 }
@@ -27,12 +26,10 @@ function saveSetting(key, value) {
     const numValue = parseInt(value);
     if (!isNaN(numValue)) {
       localStorage.setItem(key, numValue.toString());
-      console.log(`Saved setting: ${key}=${numValue}`);
       return true;
     }
     return false;
   } catch (error) {
-    console.error(`Error saving setting ${key}:`, error);
     return false;
   }
 }
@@ -56,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
     musicEnabled: getSetting("musicEnabled"),
     soundEnabled: getSetting("soundEnabled"),
   };
-  console.log("Loaded settings:", settings);
   document.getElementById("music-volume").value = settings.musicVolume;
   document.getElementById(
     "music-volume-value"

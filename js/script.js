@@ -15,9 +15,7 @@ window.addEventListener("load", () => {
     title.appendChild(span);
   });
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .register("/service-worker.js")
-      .catch((err) => console.error("SW error", err));
+    navigator.serviceWorker.register("/service-worker.js");
   }
   if (isMobile && !isStandalone) {
     document.documentElement.style.overflow = "hidden";

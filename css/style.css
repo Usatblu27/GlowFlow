@@ -18,7 +18,7 @@ body {
   padding: 0;
   font-family: var(--font-family);
   font-display: swap;
-  background: url("../icons/image.webp");
+  background: url("../icons/image.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -107,7 +107,7 @@ h1 span {
   height: 50px;
   background-color: var(--light-color);
   border-radius: 50%;
-  box-shadow: 0 0 50px var(--cyan-color);
+  box-shadow: 0 0 15px var(--cyan-color);
   opacity: 0.7;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -178,17 +178,15 @@ h1 span {
   padding: 30px;
   border: 3px solid var(--cyan-color);
   border-radius: 20px;
-  box-shadow: 0 0 40px var(--cyan-color), inset 0 0 30px var(--cyan-color);
+  box-shadow: 0 0 10px var(--cyan-color);
   max-width: 90%;
   max-height: 90%;
   overflow-y: auto;
-  animation: glow-pulse 3s infinite alternate;
 }
 .modal-title {
   color: var(--cyan-color);
   text-align: center;
   margin-bottom: 25px;
-  text-shadow: 0 0 15px var(--cyan-color);
   font-size: 2.2rem;
 }
 .license-text {
@@ -262,11 +260,9 @@ h1 span {
 #license-confirm:enabled {
   background: var(--cyan-color);
   color: black;
-  box-shadow: 0 0 15px var(--cyan-color);
 }
 #license-confirm:enabled:hover {
   background: var(--magenta-color);
-  box-shadow: 0 0 25px var(--magenta-color);
   transform: scale(1.05);
 }
 @media (max-width: 768px) {
