@@ -1,4 +1,4 @@
-const CACHE_NAME = "glow-flow-v1";
+const CACHE_NAME = "GlowFlow-v1";
 const OFFLINE_URL = [
   "./html/offline.html",
   "./css/offline.css",

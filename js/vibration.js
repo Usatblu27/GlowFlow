@@ -55,12 +55,12 @@ class VibrationManager {
     );
   }
   static patterns = {
-    button: [15],
-    collision: [25],
-    explosion: [30, 50, 30],
+    button: [50],
+    collision: [50],
+    explosion: [70, 100, 70],
     score: [40, 80, 40],
     gameOver: [100, 150, 100, 150, 100],
-    menu: [10],
+    menu: [40],
     error: [100, 50, 100],
   };
 }

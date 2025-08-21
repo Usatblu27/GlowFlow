@@ -196,6 +196,7 @@ window.updateGameSettings = function () {
   if (settings.musicEnabled === 0) {
     bgMusic.pause();
   } else if (!isPaused && gameActive) {
+    bgMusic.play().catch((e) => console.log("Music play prevented:", e));
   }
 };
 function applyGlowEffect(color) {
@@ -222,6 +223,9 @@ function triggerVibration(patternName) {
     });
   }
 }
+bgMusic.volume = (localStorage.getItem("musicVolume") || 50) / 100;
+collisionSound.volume = 0.3;
+explosionSound.volume = 0.3;
 function togglePause() {
   isPaused = !isPaused;
   if (!gameActive) return;
@@ -247,6 +251,7 @@ function togglePause() {
     Runner.run(runner, engine);
     pauseOverlay.style.display = "none";
     if (localStorage.getItem("musicSetting") !== "off") {
+      bgMusic.play().catch((e) => console.log("Play prevented:", e));
     }
     pieceIntervalId = setInterval(() => {
       if (canSpawnNewPiece) createPiece();
@@ -257,9 +262,6 @@ function togglePause() {
     }, 30000);
   }
 }
-bgMusic.volume = (localStorage.getItem("musicVolume") || 50) / 100;
-collisionSound.volume = 0.3;
-explosionSound.volume = 0.3;
 function playSound(sound) {
   const settings = loadGameSettings();
   const soundEnabled = settings.soundEnabled === 1;
@@ -267,6 +269,7 @@ function playSound(sound) {
   if (soundEnabled && soundVolume > 0) {
     sound.volume = soundVolume;
     sound.currentTime = 0;
+    sound.play().catch((e) => console.log("Sound play prevented:", e));
   }
 }
 function updateBestScore() {
@@ -939,6 +942,7 @@ displayedBestScore = bestScore;
 document.getElementById("best-score").textContent = `BEST: ${bestScore}`;
 const musicSetting = localStorage.getItem("musicSetting") || "on";
 if (musicSetting === "on") {
+  bgMusic.play().catch((e) => console.log("Autoplay prevented:", e));
 }
 runner = Runner.create();
 Runner.run(runner, engine);
